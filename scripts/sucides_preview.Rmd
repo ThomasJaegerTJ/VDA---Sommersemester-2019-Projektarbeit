@@ -1,0 +1,21 @@
+---
+title: "R Notebook"
+author: "Philipp Dalheimer , Thomas Jäger"
+output:
+  html_notebook: default
+  pdf_document: default
+---
+
+## Aussgangssituation
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+str(master)
+```
+
+
+
+
