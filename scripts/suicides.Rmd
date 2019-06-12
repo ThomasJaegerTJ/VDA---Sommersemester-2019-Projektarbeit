@@ -5,5 +5,84 @@ output: html_notebook
 
 ```{r}
 library(tidyverse)
+library(countrycode)
+# load data
+
+data <- read_csv("../data/master.csv")
+
+# data cleaning
+# entfernen der Spalten HDI for year und suicides/100k pop
+# umbennen der anderern Spalten
+
+data <- data %>% 
+  select(-c(`HDI for year`, `suicides/100k pop`)) %>%
+  rename(gdp_for_year = `gdp_for_year ($)`, 
+         gdp_per_capita = `gdp_per_capita ($)`, 
+         country_year = `country-year`) %>%
+  as.data.frame()
+
+# das Jahr 2016 aus data werfen
+
+data <- data %>%
+  filter(year != 2016) %>%
+  select(-country_year)
+
+# Jahre mit <= 3 Jahren von Daten rauswerfen
+
+minimum_years <- data %>%
+  group_by(country) %>%
+  summarize(rows = n(),
+            years = rows / 12) %>%
+  arrange(years)
+
+data <- data %>%
+  filter(!(country %in% head(minimum_years$country, 7)))
+
+# das datenset ein wenig kleiner machen
+data$age <- gsub(" years", "", data$age)        # gsub um Strings zu replacen
+data$sex <- ifelse(data$sex == "male", "Male", "Female")
+
+# continent data
+data$continent <- countrycode(sourcevar = data[, "country"],
+                              origin = "country.name",
+                              destination = "continent")
+
+
+
+# nominale daten (country, sex, continent)
+data_nominal <- c('country','sex','continent')
+data[data_nominal] <- lapply(data[data_nominal], function(x){factor(x)})
+
+# ordinale daten (alter, generation)
+data$age <- factor(data$age, 
+                   ordered = T,
+                   levels = c("5-14",
+                              "15-24",
+                              "25-34",
+                              "35-54",
+                              "55-74",
+                              "75+"))
+
+# generation ordinal
+
+data$generation <- factor(data$generation, 
+                   ordered = T, 
+                   levels = c("G.I. Generation", 
+                              "Silent",
+                              "Boomers", 
+                              "Generation X", 
+                              "Millenials", 
+                              "Generation Z"))
+
+
+data <- as_tibble(data)  # TO-DO as_tibble erklären
+
+# global average
+global_average <- (sum(as.numeric(data$suicides_no)) / sum(as.numeric(data$population))) * 100000
+
+# die finalen daten anschauen
+glimpse(data)
+
+
 ```
 

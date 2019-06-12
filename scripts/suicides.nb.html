@@ -1769,14 +1769,123 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGNvdW50cnljb2RlKVxuIyBsb2FkIGRhdGFcblxuZGF0YSA8LSByZWFkX2NzdihcIi4uL2RhdGEvbWFzdGVyLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>library(tidyverse)
+library(countrycode)
+# load data
+
+data &lt;- read_csv(&quot;../data/master.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBjb3VudHJ5ID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIHllYXIgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgc2V4ID0gXHUwMDFiWzMxbWNvbF9jaGFyYWN0ZXIoKVx1MDAxYlszOW0sXG4gIGFnZSA9IFx1MDAxYlszMW1jb2xfY2hhcmFjdGVyKClcdTAwMWJbMzltLFxuICBzdWljaWRlc19ubyA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBwb3B1bGF0aW9uID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGBzdWljaWRlcy8xMDBrIHBvcGAgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgYGNvdW50cnkteWVhcmAgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgYEhESSBmb3IgeWVhcmAgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgYGdkcF9mb3JfeWVhciAoJClgID0gXHUwMDFiWzMybWNvbF9udW1iZXIoKVx1MDAxYlszOW0sXG4gIGBnZHBfcGVyX2NhcGl0YSAoJClgID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGdlbmVyYXRpb24gPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bVxuKVxuIn0= -->
+<pre><code>Parsed with column specification:
+cols(
+  country = [31mcol_character()[39m,
+  year = [32mcol_double()[39m,
+  sex = [31mcol_character()[39m,
+  age = [31mcol_character()[39m,
+  suicides_no = [32mcol_double()[39m,
+  population = [32mcol_double()[39m,
+  `suicides/100k pop` = [32mcol_double()[39m,
+  `country-year` = [31mcol_character()[39m,
+  `HDI for year` = [32mcol_double()[39m,
+  `gdp_for_year ($)` = [32mcol_number()[39m,
+  `gdp_per_capita ($)` = [32mcol_double()[39m,
+  generation = [31mcol_character()[39m
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBkYXRhIGNsZWFuaW5nXG4jIGVudGZlcm5lbiBkZXIgU3BhbHRlbiBIREkgZm9yIHllYXIgdW5kIHN1aWNpZGVzLzEwMGsgcG9wXG4jIHVtYmVubmVuIGRlciBhbmRlcmVybiBTcGFsdGVuXG5cbmRhdGEgPC0gZGF0YSAlPiUgXG4gIHNlbGVjdCgtYyhgSERJIGZvciB5ZWFyYCwgYHN1aWNpZGVzLzEwMGsgcG9wYCkpICU+JVxuICByZW5hbWUoZ2RwX2Zvcl95ZWFyID0gYGdkcF9mb3JfeWVhciAoJClgLCBcbiAgICAgICAgIGdkcF9wZXJfY2FwaXRhID0gYGdkcF9wZXJfY2FwaXRhICgkKWAsIFxuICAgICAgICAgY291bnRyeV95ZWFyID0gYGNvdW50cnkteWVhcmApICU+JVxuICBhcy5kYXRhLmZyYW1lKClcblxuIyBkYXMgSmFociAyMDE2IGF1cyBkYXRhIHdlcmZlblxuXG5kYXRhIDwtIGRhdGEgJT4lXG4gIGZpbHRlcih5ZWFyICE9IDIwMTYpICU+JVxuICBzZWxlY3QoLWNvdW50cnlfeWVhcilcblxuIyBKYWhyZSBtaXQgPD0gMyBKYWhyZW4gdm9uIERhdGVuIHJhdXN3ZXJmZW5cblxubWluaW11bV95ZWFycyA8LSBkYXRhICU+JVxuICBncm91cF9ieShjb3VudHJ5KSAlPiVcbiAgc3VtbWFyaXplKHJvd3MgPSBuKCksXG4gICAgICAgICAgICB5ZWFycyA9IHJvd3MgLyAxMikgJT4lXG4gIGFycmFuZ2UoeWVhcnMpXG5cbmRhdGEgPC0gZGF0YSAlPiVcbiAgZmlsdGVyKCEoY291bnRyeSAlaW4lIGhlYWQobWluaW11bV95ZWFycyRjb3VudHJ5LCA3KSkpXG5cbiMgZGFzIGRhdGVuc2V0IGVpbiB3ZW5pZyBrbGVpbmVyIG1hY2hlblxuZGF0YSRhZ2UgPC0gZ3N1YihcIiB5ZWFyc1wiLCBcIlwiLCBkYXRhJGFnZSkgICAgICAgICMgZ3N1YiB1bSBTdHJpbmdzIHp1IHJlcGxhY2VuXG5kYXRhJHNleCA8LSBpZmVsc2UoZGF0YSRzZXggPT0gXCJtYWxlXCIsIFwiTWFsZVwiLCBcIkZlbWFsZVwiKVxuXG4jIGNvbnRpbmVudCBkYXRhXG5kYXRhJGNvbnRpbmVudCA8LSBjb3VudHJ5Y29kZShzb3VyY2V2YXIgPSBkYXRhWywgXCJjb3VudHJ5XCJdLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgb3JpZ2luID0gXCJjb3VudHJ5Lm5hbWVcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRlc3RpbmF0aW9uID0gXCJjb250aW5lbnRcIilcblxuXG5cbiMgbm9taW5hbGUgZGF0ZW4gKGNvdW50cnksIHNleCwgY29udGluZW50KVxuZGF0YV9ub21pbmFsIDwtIGMoJ2NvdW50cnknLCdzZXgnLCdjb250aW5lbnQnKVxuZGF0YVtkYXRhX25vbWluYWxdIDwtIGxhcHBseShkYXRhW2RhdGFfbm9taW5hbF0sIGZ1bmN0aW9uKHgpe2ZhY3Rvcih4KX0pXG5cbiMgb3JkaW5hbGUgZGF0ZW4gKGFsdGVyLCBnZW5lcmF0aW9uKVxuZGF0YSRhZ2UgPC0gZmFjdG9yKGRhdGEkYWdlLCBcbiAgICAgICAgICAgICAgICAgICBvcmRlcmVkID0gVCxcbiAgICAgICAgICAgICAgICAgICBsZXZlbHMgPSBjKFwiNS0xNFwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCIxNS0yNFwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCIyNS0zNFwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCIzNS01NFwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCI1NS03NFwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCI3NStcIikpXG5cbiMgZ2VuZXJhdGlvbiBvcmRpbmFsXG5cbmRhdGEkZ2VuZXJhdGlvbiA8LSBmYWN0b3IoZGF0YSRnZW5lcmF0aW9uLCBcbiAgICAgICAgICAgICAgICAgICBvcmRlcmVkID0gVCwgXG4gICAgICAgICAgICAgICAgICAgbGV2ZWxzID0gYyhcIkcuSS4gR2VuZXJhdGlvblwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiU2lsZW50XCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIkJvb21lcnNcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIkdlbmVyYXRpb24gWFwiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiTWlsbGVuaWFsc1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiR2VuZXJhdGlvbiBaXCIpKVxuXG5cbmRhdGEgPC0gYXNfdGliYmxlKGRhdGEpICAjIFRPLURPIGFzX3RpYmJsZSBlcmtsw6RyZW5cblxuIyBnbG9iYWwgYXZlcmFnZVxuZ2xvYmFsX2F2ZXJhZ2UgPC0gKHN1bShhcy5udW1lcmljKGRhdGEkc3VpY2lkZXNfbm8pKSAvIHN1bShhcy5udW1lcmljKGRhdGEkcG9wdWxhdGlvbikpKSAqIDEwMDAwMFxuXG4jIGRpZSBmaW5hbGVuIGRhdGVuIGFuc2NoYXVlblxuZ2xpbXBzZShkYXRhKVxuYGBgIn0= -->
+<pre class="r"><code># data cleaning
+# entfernen der Spalten HDI for year und suicides/100k pop
+# umbennen der anderern Spalten
+
+data &lt;- data %&gt;% 
+  select(-c(`HDI for year`, `suicides/100k pop`)) %&gt;%
+  rename(gdp_for_year = `gdp_for_year ($)`, 
+         gdp_per_capita = `gdp_per_capita ($)`, 
+         country_year = `country-year`) %&gt;%
+  as.data.frame()
+
+# das Jahr 2016 aus data werfen
+
+data &lt;- data %&gt;%
+  filter(year != 2016) %&gt;%
+  select(-country_year)
+
+# Jahre mit &lt;= 3 Jahren von Daten rauswerfen
+
+minimum_years &lt;- data %&gt;%
+  group_by(country) %&gt;%
+  summarize(rows = n(),
+            years = rows / 12) %&gt;%
+  arrange(years)
+
+data &lt;- data %&gt;%
+  filter(!(country %in% head(minimum_years$country, 7)))
+
+# das datenset ein wenig kleiner machen
+data$age &lt;- gsub(&quot; years&quot;, &quot;&quot;, data$age)        # gsub um Strings zu replacen
+data$sex &lt;- ifelse(data$sex == &quot;male&quot;, &quot;Male&quot;, &quot;Female&quot;)
+
+# continent data
+data$continent &lt;- countrycode(sourcevar = data[, &quot;country&quot;],
+                              origin = &quot;country.name&quot;,
+                              destination = &quot;continent&quot;)
+
+
+
+# nominale daten (country, sex, continent)
+data_nominal &lt;- c('country','sex','continent')
+data[data_nominal] &lt;- lapply(data[data_nominal], function(x){factor(x)})
+
+# ordinale daten (alter, generation)
+data$age &lt;- factor(data$age, 
+                   ordered = T,
+                   levels = c(&quot;5-14&quot;,
+                              &quot;15-24&quot;,
+                              &quot;25-34&quot;,
+                              &quot;35-54&quot;,
+                              &quot;55-74&quot;,
+                              &quot;75+&quot;))
+
+# generation ordinal
+
+data$generation &lt;- factor(data$generation, 
+                   ordered = T, 
+                   levels = c(&quot;G.I. Generation&quot;, 
+                              &quot;Silent&quot;,
+                              &quot;Boomers&quot;, 
+                              &quot;Generation X&quot;, 
+                              &quot;Millenials&quot;, 
+                              &quot;Generation Z&quot;))
+
+
+data &lt;- as_tibble(data)  # TO-DO as_tibble erklären
+
+# global average
+global_average &lt;- (sum(as.numeric(data$suicides_no)) / sum(as.numeric(data$population))) * 100000
+
+# die finalen daten anschauen
+glimpse(data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiT2JzZXJ2YXRpb25zOiAyNyw0OTJcblZhcmlhYmxlczogMTBcbiQgY291bnRyeSAgICAgICAgXHUwMDFiWzNtXHUwMDFiWzkwbTxmY3Q+XHUwMDFiWzM5bVx1MDAxYlsyM20gQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYW5pYSwgQWxiYeKAplxuJCB5ZWFyICAgICAgICAgICBcdTAwMWJbM21cdTAwMWJbOTBtPGRibD5cdTAwMWJbMzltXHUwMDFiWzIzbSAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg3LCAxOTg4LCAxOTg4LCAxOTg4LCAxOTg4LCAxOTg4LCAxOTg4LCAxOTg4LCAxOTg4LCAxOTg4LCAxOTg4LCAxOTg4LCAx4oCmXG4kIHNleCAgICAgICAgICAgIFx1MDAxYlszbVx1MDAxYls5MG08ZmN0Plx1MDAxYlszOW1cdTAwMWJbMjNtIE1hbGUsIE1hbGUsIEZlbWFsZSwgTWFsZSwgTWFsZSwgRmVtYWxlLCBGZW1hbGUsIEZlbWFsZSwgTWFsZSwgRmVtYWxlLCBGZW1hbGUsIE1hbGUsIEZlbWFsZSwgTWFsZSwgTWFsZSwgTWFsZSwgTWFsZSwgRmVtYWxlLCBGZW1hbGUsIEZlbWFsZSzigKZcbiQgYWdlICAgICAgICAgICAgXHUwMDFiWzNtXHUwMDFiWzkwbTxvcmQ+XHUwMDFiWzM5bVx1MDAxYlsyM20gMTUtMjQsIDM1LTU0LCAxNS0yNCwgNzUrLCAyNS0zNCwgNzUrLCAzNS01NCwgMjUtMzQsIDU1LTc0LCA1LTE0LCA1NS03NCwgNS0xNCwgNzUrLCAxNS0yNCwgNzUrLCAzNS01NCwgNTUtNzQsIDE1LTI0LCA1NS03NCwgMjUtMzQsIDI1LTM0LCAzNeKAplxuJCBzdWljaWRlc19ubyAgICBcdTAwMWJbM21cdTAwMWJbOTBtPGRibD5cdTAwMWJbMzltXHUwMDFiWzIzbSAyMSwgMTYsIDE0LCAxLCA5LCAxLCA2LCA0LCAxLCAwLCAwLCAwLCAyLCAxNywgMSwgMTQsIDQsIDgsIDMsIDUsIDUsIDQsIDAsIDAsIDIsIDE4LCAxNSwgNiwgMTIsIDcsIDUsIDIsIDEsIDAsIDAsIDAsIDEyLCA5LCA1LCA3LCA3LCA0LCAyLCAx4oCmXG4kIHBvcHVsYXRpb24gICAgIFx1MDAxYlszbVx1MDAxYls5MG08ZGJsPlx1MDAxYlszOW1cdTAwMWJbMjNtIDMxMjkwMCwgMzA4MDAwLCAyODk3MDAsIDIxODAwLCAyNzQzMDAsIDM1NjAwLCAyNzg4MDAsIDI1NzIwMCwgMTM3NTAwLCAzMTEwMDAsIDE0NDYwMCwgMzM4MjAwLCAzNjQwMCwgMzE5MjAwLCAyMjMwMCwgMzE0MTAwLCAxNDAyMDAsIDI5NTYwMCzigKZcbiQgZ2RwX2Zvcl95ZWFyICAgXHUwMDFiWzNtXHUwMDFiWzkwbTxkYmw+XHUwMDFiWzM5bVx1MDAxYlsyM20gMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNDkwMCwgMjE1NjYyNOKAplxuJCBnZHBfcGVyX2NhcGl0YSBcdTAwMWJbM21cdTAwMWJbOTBtPGRibD5cdTAwMWJbMzltXHUwMDFiWzIzbSA3OTYsIDc5NiwgNzk2LCA3OTYsIDc5NiwgNzk2LCA3OTYsIDc5NiwgNzk2LCA3OTYsIDc5NiwgNzk2LCA3NjksIDc2OSwgNzY5LCA3NjksIDc2OSwgNzY5LCA3NjksIDc2OSwgNzY5LCA3NjksIDc2OSwgNzY5LCA4MzMsIDgzMywgODMzLCA4MzMs4oCmXG4kIGdlbmVyYXRpb24gICAgIFx1MDAxYlszbVx1MDAxYls5MG08b3JkPlx1MDAxYlszOW1cdTAwMWJbMjNtIEdlbmVyYXRpb24gWCwgU2lsZW50LCBHZW5lcmF0aW9uIFgsIEcuSS4gR2VuZXJhdGlvbiwgQm9vbWVycywgRy5JLiBHZW5lcmF0aW9uLCBTaWxlbnQsIEJvb21lcnMsIEcuSS4gR2VuZXJhdGlvbiwgR2VuZXJhdGlvbiBYLCBHLkkuIEdlbmVyYXTigKZcbiQgY29udGluZW50ICAgICAgXHUwMDFiWzNtXHUwMDFiWzkwbTxmY3Q+XHUwMDFiWzM5bVx1MDAxYlsyM20gRXVyb3BlLCBFdXJvcGUsIEV1cm9wZSwgRXVyb3BlLCBFdXJvcGUsIEV1cm9wZSwgRXVyb3BlLCBFdXJvcGUsIEV1cm9wZSwgRXVyb3BlLCBFdXJvcGUsIEV1cm9wZSwgRXVyb3BlLCBFdXJvcGUsIEV1cm9wZSwgRXVyb3BlLCBFdXJvcGUsIEV1cuKAplxuIn0= -->
+<pre><code>Observations: 27,492
+Variables: 10
+$ country        [3m[90m&lt;fct&gt;[39m[23m Albania, Albania, Albania, Albania, Albania, Albania, Albania, Albania, Albania, Albania, Albania, Albania, Albania, Albania, Albania, Alba…
+$ year           [3m[90m&lt;dbl&gt;[39m[23m 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1988, 1988, 1988, 1988, 1988, 1988, 1988, 1988, 1988, 1988, 1988, 1…
+$ sex            [3m[90m&lt;fct&gt;[39m[23m Male, Male, Female, Male, Male, Female, Female, Female, Male, Female, Female, Male, Female, Male, Male, Male, Male, Female, Female, Female,…
+$ age            [3m[90m&lt;ord&gt;[39m[23m 15-24, 35-54, 15-24, 75+, 25-34, 75+, 35-54, 25-34, 55-74, 5-14, 55-74, 5-14, 75+, 15-24, 75+, 35-54, 55-74, 15-24, 55-74, 25-34, 25-34, 35…
+$ suicides_no    [3m[90m&lt;dbl&gt;[39m[23m 21, 16, 14, 1, 9, 1, 6, 4, 1, 0, 0, 0, 2, 17, 1, 14, 4, 8, 3, 5, 5, 4, 0, 0, 2, 18, 15, 6, 12, 7, 5, 2, 1, 0, 0, 0, 12, 9, 5, 7, 7, 4, 2, 1…
+$ population     [3m[90m&lt;dbl&gt;[39m[23m 312900, 308000, 289700, 21800, 274300, 35600, 278800, 257200, 137500, 311000, 144600, 338200, 36400, 319200, 22300, 314100, 140200, 295600,…
+$ gdp_for_year   [3m[90m&lt;dbl&gt;[39m[23m 2156624900, 2156624900, 2156624900, 2156624900, 2156624900, 2156624900, 2156624900, 2156624900, 2156624900, 2156624900, 2156624900, 2156624…
+$ gdp_per_capita [3m[90m&lt;dbl&gt;[39m[23m 796, 796, 796, 796, 796, 796, 796, 796, 796, 796, 796, 796, 769, 769, 769, 769, 769, 769, 769, 769, 769, 769, 769, 769, 833, 833, 833, 833,…
+$ generation     [3m[90m&lt;ord&gt;[39m[23m Generation X, Silent, Generation X, G.I. Generation, Boomers, G.I. Generation, Silent, Boomers, G.I. Generation, Generation X, G.I. Generat…
+$ continent      [3m[90m&lt;fct&gt;[39m[23m Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Europe, Eur…</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpgYGAKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGNvdW50cnljb2RlKQojIGxvYWQgZGF0YQoKZGF0YSA8LSByZWFkX2NzdigiLi4vZGF0YS9tYXN0ZXIuY3N2IikKCiMgZGF0YSBjbGVhbmluZwojIGVudGZlcm5lbiBkZXIgU3BhbHRlbiBIREkgZm9yIHllYXIgdW5kIHN1aWNpZGVzLzEwMGsgcG9wCiMgdW1iZW5uZW4gZGVyIGFuZGVyZXJuIFNwYWx0ZW4KCmRhdGEgPC0gZGF0YSAlPiUgCiAgc2VsZWN0KC1jKGBIREkgZm9yIHllYXJgLCBgc3VpY2lkZXMvMTAwayBwb3BgKSkgJT4lCiAgcmVuYW1lKGdkcF9mb3JfeWVhciA9IGBnZHBfZm9yX3llYXIgKCQpYCwgCiAgICAgICAgIGdkcF9wZXJfY2FwaXRhID0gYGdkcF9wZXJfY2FwaXRhICgkKWAsIAogICAgICAgICBjb3VudHJ5X3llYXIgPSBgY291bnRyeS15ZWFyYCkgJT4lCiAgYXMuZGF0YS5mcmFtZSgpCgojIGRhcyBKYWhyIDIwMTYgYXVzIGRhdGEgd2VyZmVuCgpkYXRhIDwtIGRhdGEgJT4lCiAgZmlsdGVyKHllYXIgIT0gMjAxNikgJT4lCiAgc2VsZWN0KC1jb3VudHJ5X3llYXIpCgojIEphaHJlIG1pdCA8PSAzIEphaHJlbiB2b24gRGF0ZW4gcmF1c3dlcmZlbgoKbWluaW11bV95ZWFycyA8LSBkYXRhICU+JQogIGdyb3VwX2J5KGNvdW50cnkpICU+JQogIHN1bW1hcml6ZShyb3dzID0gbigpLAogICAgICAgICAgICB5ZWFycyA9IHJvd3MgLyAxMikgJT4lCiAgYXJyYW5nZSh5ZWFycykKCmRhdGEgPC0gZGF0YSAlPiUKICBmaWx0ZXIoIShjb3VudHJ5ICVpbiUgaGVhZChtaW5pbXVtX3llYXJzJGNvdW50cnksIDcpKSkKCiMgZGFzIGRhdGVuc2V0IGVpbiB3ZW5pZyBrbGVpbmVyIG1hY2hlbgpkYXRhJGFnZSA8LSBnc3ViKCIgeWVhcnMiLCAiIiwgZGF0YSRhZ2UpICAgICAgICAjIGdzdWIgdW0gU3RyaW5ncyB6dSByZXBsYWNlbgpkYXRhJHNleCA8LSBpZmVsc2UoZGF0YSRzZXggPT0gIm1hbGUiLCAiTWFsZSIsICJGZW1hbGUiKQoKIyBjb250aW5lbnQgZGF0YQpkYXRhJGNvbnRpbmVudCA8LSBjb3VudHJ5Y29kZShzb3VyY2V2YXIgPSBkYXRhWywgImNvdW50cnkiXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgb3JpZ2luID0gImNvdW50cnkubmFtZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRlc3RpbmF0aW9uID0gImNvbnRpbmVudCIpCgoKCiMgbm9taW5hbGUgZGF0ZW4gKGNvdW50cnksIHNleCwgY29udGluZW50KQpkYXRhX25vbWluYWwgPC0gYygnY291bnRyeScsJ3NleCcsJ2NvbnRpbmVudCcpCmRhdGFbZGF0YV9ub21pbmFsXSA8LSBsYXBwbHkoZGF0YVtkYXRhX25vbWluYWxdLCBmdW5jdGlvbih4KXtmYWN0b3IoeCl9KQoKIyBvcmRpbmFsZSBkYXRlbiAoYWx0ZXIsIGdlbmVyYXRpb24pCmRhdGEkYWdlIDwtIGZhY3RvcihkYXRhJGFnZSwgCiAgICAgICAgICAgICAgICAgICBvcmRlcmVkID0gVCwKICAgICAgICAgICAgICAgICAgIGxldmVscyA9IGMoIjUtMTQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiMTUtMjQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiMjUtMzQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiMzUtNTQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiNTUtNzQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiNzUrIikpCgojIGdlbmVyYXRpb24gb3JkaW5hbAoKZGF0YSRnZW5lcmF0aW9uIDwtIGZhY3RvcihkYXRhJGdlbmVyYXRpb24sIAogICAgICAgICAgICAgICAgICAgb3JkZXJlZCA9IFQsIAogICAgICAgICAgICAgICAgICAgbGV2ZWxzID0gYygiRy5JLiBHZW5lcmF0aW9uIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJTaWxlbnQiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiQm9vbWVycyIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiR2VuZXJhdGlvbiBYIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJNaWxsZW5pYWxzIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJHZW5lcmF0aW9uIFoiKSkKCgpkYXRhIDwtIGFzX3RpYmJsZShkYXRhKSAgIyBUTy1ETyBhc190aWJibGUgZXJrbMOkcmVuCgojIGdsb2JhbCBhdmVyYWdlCmdsb2JhbF9hdmVyYWdlIDwtIChzdW0oYXMubnVtZXJpYyhkYXRhJHN1aWNpZGVzX25vKSkgLyBzdW0oYXMubnVtZXJpYyhkYXRhJHBvcHVsYXRpb24pKSkgKiAxMDAwMDAKCiMgZGllIGZpbmFsZW4gZGF0ZW4gYW5zY2hhdWVuCmdsaW1wc2UoZGF0YSkKCgpgYGAKCg==</div>
 
 
 
