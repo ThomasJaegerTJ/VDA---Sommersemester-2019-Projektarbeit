@@ -16,6 +16,15 @@ library(tidyverse)
 str(master)
 ```
 
+```{r}
+head(master)
+```
 
+```{r}
+# Tidy data
 
+# HDI for year (zu viele fehlende Werte), suicides/100k pop (falsche Werte?!)
+master %>%
+  select(-c(`HDI for year`, `suicides/100k pop`)) %>%
+```
 
