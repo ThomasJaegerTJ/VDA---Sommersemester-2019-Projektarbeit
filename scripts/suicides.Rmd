@@ -8,8 +8,6 @@ output: html_notebook
 
 # Beschreibung der Daten
 
-# Unsere Ziele
-
 ```{r}
 library(tidyverse)
 library(countrycode)
