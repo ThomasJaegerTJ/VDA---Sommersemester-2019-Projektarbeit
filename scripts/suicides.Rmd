@@ -2,10 +2,10 @@
 title: "VDA - Sommesemster 2019 - Visualisierungen der Suicide Daten von 1985-2016"
 author: "Philipp Dalheimer, Thomas Jäger"
 output:
+  html_notebook: default
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
-  html_notebook: default
 ---
 
 ### Ausgangssituation
@@ -294,5 +294,25 @@ ggplot(country, aes(x = country, y = suicide_per_100k, fill = continent)) +
   scale_y_continuous(breaks = seq(0, 45, 2)) +
   scale_x_discrete("Country", labels =  , position = "bottom") +
   theme(legend.position = "bottom")
+```
+
+### Unterschiede der Geschlechter, geordnet nach Country
+
+
+```{r}
+data %>%
+  group_by(continent, sex) %>%
+  summarize(n = n(), 
+            suicides = sum(as.numeric(suicides_no)), 
+            population = sum(as.numeric(population)), 
+            suicide_per_100k = (suicides / population) * 100000) %>%
+  ggplot(aes(x = continent, y = suicide_per_100k, fill = sex)) + 
+  geom_bar(stat = "identity", position = "dodge") + 
+  geom_hline(yintercept = global_average, linetype = 2, color = "grey35", size = 1) +
+  labs(title = "Unterschied Geschlechter, geordnet nach Continent",
+   x = "Continent", 
+   y = "Suicides per 100k", 
+   fill = "Sex") +
+  coord_flip()
 ```
 
