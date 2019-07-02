@@ -187,6 +187,9 @@ data %>%
 ```
 *Abbildung 1: Suicides per 100k per Year. Gestrichelte Linie ist der globale Durchschnitt.*
 
+**Was uns auffällt:**  
+ - Höchstwert der Suizidrate mit 15.3 Toten per 100k war in 1995  
+ - Die Rate sinkt stetig, zu 11.5 Toten per 100k in 2015 ( ca. 25% Abstieg)
 
 
 ### Selbstmorde nach Kontinent
@@ -230,6 +233,12 @@ continent_plot
 ```{r}
 continent_time_plot
 ```
+**Was uns auffällt:**
+  - Europa hat die höchste Selbstmordrate von allen, sie steigt stetig ab und hat seid 1995 um ca. 40% abgenommen.
+  - 2015 war die Rate von Euro ähnlich der von Asien und Ozeanien
+  - Die Trends von Ozeanien und Amerika sind besorgniserregned
+
+
 
 ### Selbstmorde nach Geschlecht
 
@@ -268,6 +277,8 @@ sex_plot
 ```{r}
 sex_time_plot
 ```
+**Was uns auffällt**
+
 
 ### Selbstmorde nach Country
 
