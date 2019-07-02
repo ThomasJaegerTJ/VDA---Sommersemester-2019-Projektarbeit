@@ -1,11 +1,11 @@
 ---
 title: "VDA - Sommesemster 2019 - Visualisierungen der Suicide Daten von 1985-2016"
-author: "Philip Dalheimer, Thomas Jäger"
+author: "Philipp Dalheimer, Thomas Jäger"
 output:
-  html_notebook: default
   html_document:
     df_print: paged
   pdf_document: default
+  html_notebook: default
 ---
 
 ### Ausgangssituation
@@ -35,17 +35,46 @@ World Bank. (2018). World development indicators: GDP (current US$) by country:1
 
 ### Unsere Ziele
 
+Durch die Bearbeitung und Visualisierung dieses Datensatzes erhoffen wir uns einen tieferen Einblick in das genannte Thema und versuchen folgende Fragestellungen herauszufinden:
+
+* Wo fanden die meisten Selbstmorde statt?
+* Gibt es einen Zusammenhang zwischen Alter & Geschlecht?
+* Gibt es mehrere Suizide, wenn die Population höher ist?
+* Was könnten Gründe für die Selbstmorde gewesen sein?
+* Gibt es einen Zusammenhang zwischen reichen/armen Ländern und Suiziden?
+
 ### Beschreibung der Daten
+
+Der Datensatz _"Suicide Rates Overview 1985 to 2016"_ beinhaltet 12 Spalten und 27.820 Zeilen. Die Zeilen sind unterteilt in:
+
+1. country _(Land)_
+2. year _(Jahr)_
+3. sex _(Geschlecht)_
+4. age _(Alter)_
+5. suicides_no _(Anzahl der Suizide)_
+6. population _(Population der Gruppe in der Spalte; Bsp.: Männlich, 75+, Brasilien, Jahr 2000)_
+7. suicides/100k pop _(Suizide pro 100k Population)_
+8. country-year _(Zusammensetzung aus Land und Jahr)_
+9. HDI for year _(Human Development Index: Index der menschlichen Entwicklung)_
+10. gdp_for_year ($) _(Bruttoinlandsprodukt)_
+11. gdp_per_capita ($) _(Bruttoinlandsprodukt pro Kopf)_
+12. generation _(Die Generationen sind nachfolgend in den einzelnen Unterpunkten weiter erklärt)_
+    + G.I. Generation: Geburt zwischen 1901 - 1927
+    + Silent: Geburt zwischen 1925 - 1942
+    + Boomers: Geburt zwischen 1946 - 1964
+    + Generation X: Geburt zwischen 1960 - 1980
+    + Millennials: Geburt zwischen 1980 - frühe 2000
+    + Generation Z: Geburt zwischen Mitte 1990 - 2000er
 
 ### Beobachtungen und Bereinigen der Daten
 
-Beim betrachten der master.csv sind uns folgende Missstände aufgefallen, die wir gerne bereinigen würden:
+Beim Betrachten der master.csv sind uns folgende Missstände aufgefallen, die wir gerne bereinigen würden:
 
 * 7 Länder haben nur <= 3 Jahre an Daten
 * 2016 hatten nur wenige Länder Daten -> Jahr nicht betrachten
-* HDI for year mehr als 2/3 fehlende Werte
-* Africa hat sehr wenige Länder, die Daten haben
-* Kontinente mit dem Package countrycode hinzugefügt
+* _HDI for year_ mehr als 2/3 fehlende Werte
+* _Africa_ hat sehr wenige Länder, welche Daten haben
+* Kontinente mit dem Package _countrycode_ hinzugefügt
 
 
 
@@ -56,12 +85,11 @@ library(grid)
 library(lattice)
 
 
-# load data
+# Laden der Daten
 data <- read_csv("../data/master.csv")
 
-# data cleaning
-# entfernen der Spalte HDI for year
-# umbennen der anderern Spalten
+# Daten bereinigen und entfernen der Spalte "HDI for year"
+# Umbennen der anderern Spalten
 
 data <- data %>% 
   select(-c(`HDI for year`, `suicides/100k pop`)) %>%
@@ -70,14 +98,14 @@ data <- data %>%
          country_year = `country-year`) %>%
   as.data.frame()
 
-# das Jahr 2016 aus data werfen
+# das Jahr 2016 aus data entfernen, da in vielen Ländern dieses Jahr fehlte und in denen, welche 2016 hatten, fehlten andere Daten
 
 data <- data %>%
-  filter(year != 2016) %>% # I therefore exclude 2016 data
+  filter(year != 2016) %>%
   select(-country_year)
 
 
-# Jahre mit <= 3 Jahren von Daten rauswerfen
+# Länder mit <= 3 Jahren Gesamt-Daten entfernen
 
 minimum_years <- data %>%
   group_by(country) %>%
@@ -88,11 +116,11 @@ minimum_years <- data %>%
 data <- data %>%
   filter(!(country %in% head(minimum_years$country, 7)))
 
-# das datenset ein wenig kleiner machen
-data$age <- gsub(" years", "", data$age)        # gsub um Strings zu replacen
+# das Datenset ein wenig kleiner machen
+data$age <- gsub(" years", "", data$age)        # gsub um Strings zu ersetzen
 data$sex <- ifelse(data$sex == "male", "Male", "Female")
 
-# continent data
+# Kontinente data
 data$continent <- countrycode(sourcevar = data[, "country"],
                               origin = "country.name",
                               destination = "continent")
@@ -149,7 +177,7 @@ data %>%
   ggplot(aes(x = year, y = suicides_per_100k)) + 
   geom_line(col = "deepskyblue3", size = 1) + 
   geom_point(col = "deepskyblue3", size = 2) + 
-  geom_hline(yintercept = global_average, linetype = 2, color = "grey35", size = 1) +     # global average als gedoddete linie
+  geom_hline(yintercept = global_average, linetype = 2, color = "grey35", size = 1) +     # global average als gestrichelte Linie
   labs(title = "Global Suicides (per 100k)",
        subtitle = "Trend over time, 1985 - 2015.",
        x = "Year", 
@@ -243,7 +271,8 @@ sex_time_plot
 
 ### Selbstmorde nach Country
 
-```{r}
+```{r fig.width = 10, fig.height = 13}
+# mit "fig.width = 10, fig.height = 13" erreichen wir, dass das Bild richtig angezeigt wird und nicht zu klein ist
 country <- data %>%
   group_by(country, continent) %>%
   summarize(n = n(), 
@@ -256,12 +285,12 @@ country$country <- factor(country$country,
 
 ggplot(country, aes(x = country, y = suicide_per_100k, fill = continent)) + 
   geom_bar(stat = "identity") + 
-  geom_hline(yintercept = global_average, linetype = 2, color = "grey35", size = 1) +
+  geom_hline(yintercept = global_average, linetype = 2, color = "grey35", size = 0.6) +
   labs(title = "Global suicides per 100k, by Country",
        x = "Country", 
        y = "Suicides per 100k", 
        fill = "Continent") +
-  coord_flip() +
+  coord_flip() + #Achsen drehen, weil sont Land nicht zu lesen ist
   scale_y_continuous(breaks = seq(0, 45, 2)) +
   scale_x_discrete("Country", labels =  , position = "bottom") +
   theme(legend.position = "bottom")
