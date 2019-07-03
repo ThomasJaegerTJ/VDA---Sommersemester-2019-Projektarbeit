@@ -141,19 +141,23 @@ Zu finden ist er unter
 \textbf{Quellen}
 
 United Nations Development Programm. (2018). Human development index
-(HDI). Retrieved from\\
+(HDI):\\
 \url{http://hdr.undp.org/en/indicators/137506}
 
 World Bank. (2018). World development indicators: GDP (current US\$) by
-country:1985 to 2016. Retrieved from
+country:1985 to 2016:
 \url{http://databank.worldbank.org/data/source/world-development-indicators\#}
 
-{[}Szamil{]}. (2017). Suicide in the Twenty-First Century {[}dataset{]}.
-Retrieved from\\
+{[}Szamil{]}. (2017). Suicide in the Twenty-First Century
+{[}dataset{]}:\\
 \url{https://www.kaggle.com/szamil/suicide-in-the-twenty-first-century/notebook}
 
-World Health Organization. (2018). Suicide prevention. Retrieved from\\
+World Health Organization. (2018). Suicide prevention:
 \url{http://www.who.int/mental_health/suicide-prevention/en/}
+
+Geschlechterunterschiede bei Suizid und Suizidalität/Fachartikel (2017,
+uni-muenster.de)
+\url{https://gendermedwiki.uni-muenster.de/mediawiki/index.php/Geschlechterunterschiede_bei_Suizid_und_Suizidalit\%C3\%A4t/Fachartikel}
 
 \hypertarget{unsere-ziele}{%
 \subsubsection{Unsere Ziele}\label{unsere-ziele}}
@@ -241,7 +245,7 @@ die wir gerne bereinigen würden:
 \begin{itemize}
 \tightlist
 \item
-  7 Länder haben nur \textless{}= 3 Jahre an Daten
+  7 Länder haben nur \textless= 3 Jahre an Daten
 \item
   2016 hatten nur wenige Länder Daten -\textgreater{} Jahr nicht
   betrachten
@@ -414,18 +418,24 @@ die wir gerne bereinigen würden:
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\DataTypeTok{col =} \StringTok{"deepskyblue3"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{col =} \StringTok{"deepskyblue3"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_hline}\NormalTok{(}\DataTypeTok{yintercept =}\NormalTok{ global_average, }\DataTypeTok{linetype =} \DecValTok{2}\NormalTok{, }\DataTypeTok{color =} \StringTok{"grey35"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{     }\CommentTok{# global average als gestrichelte Linie}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Global Suicides (per 100k)"}\NormalTok{,}
-       \DataTypeTok{subtitle =} \StringTok{"Trend over time, 1985 - 2015."}\NormalTok{,}
-       \DataTypeTok{x =} \StringTok{"Year"}\NormalTok{, }
-       \DataTypeTok{y =} \StringTok{"Suicides per 100k Population"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Globale Suizide (pro 100k Bevölkerung)"}\NormalTok{,}
+       \DataTypeTok{subtitle =} \StringTok{"Zeitlicher Verlauf von 1985 bis 2015"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Jahr"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Suizide pro 100k Bevölkerung"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{1985}\NormalTok{, }\DecValTok{2015}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{suicides_files/figure-latex/unnamed-chunk-2-1.pdf}
-\emph{Abbildung 1: Suicides per 100k per Year. Gestrichelte Linie ist
-der globale Durchschnitt.}
+\emph{Abbildung 1: Gestrichelte Linie ist der globale Durchschnitt.}
+
+\textbf{Was uns auffällt:}\\
+Der Höchstwert der Suizidrate pro 100k Bevölkerung lag im Jahre 1995 bei
+15.3 Suiziden. Ab 1995 sinkt die Rate stetig. Ab und an gibt es mal ein
+Jahr, bei dem die Rate wieder um 0.5 steigt. Diese sinkt jedoch im
+darauf folgenden Jahr wieder bis sie schließlich in 2015 auf 11.5
+Suizide pro 100k Bevölkerung absteigt (ca. 25\% Abstieg).
 
 \hypertarget{selbstmorde-nach-kontinent}{%
 \subsubsection{Selbstmorde nach
@@ -442,13 +452,26 @@ Kontinent}\label{selbstmorde-nach-kontinent}}
 
 \NormalTok{continent_plot <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(continent, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ continent, }\DataTypeTok{y =}\NormalTok{ suicide_per_100k, }\DataTypeTok{fill =}\NormalTok{ continent)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Global Suicides (per 100k), by Continent"}\NormalTok{,}
-  \DataTypeTok{x =} \StringTok{"Continent"}\NormalTok{, }
-  \DataTypeTok{y =} \StringTok{"Suicides per 100k"}\NormalTok{, }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Globale Suizide nach Kontinent"}\NormalTok{,}
+  \DataTypeTok{x =} \StringTok{"Kontinent"}\NormalTok{, }
+  \DataTypeTok{y =} \StringTok{"Suizide pro 100k Bevölkerung"}\NormalTok{, }
   \DataTypeTok{fill =} \StringTok{"Continent"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{, }\DataTypeTok{title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{10}\NormalTok{)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DataTypeTok{minor_breaks =}\NormalTok{ F)}
 
+\NormalTok{continent_plot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{suicides_files/figure-latex/unnamed-chunk-3-1.pdf}
+\emph{Abbildung 2}
+
+Wir erkennen anhand der oberen Abbildung 2, dass die meisten Suizide im
+Zeitraum von 1985 bis 2015 in Europa stattfanden. Wie sieht nun der
+zeitliche Verlauf der einzelnen Bereiche aus?
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{continent_time <-}\StringTok{ }\NormalTok{data }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(year, continent) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{suicide_per_100k =}\NormalTok{ (}\KeywordTok{sum}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(suicides_no)) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(population))) }\OperatorTok{*}\StringTok{ }\DecValTok{100000}\NormalTok{)}
@@ -459,26 +482,28 @@ Kontinent}\label{selbstmorde-nach-kontinent}}
 \StringTok{  }\KeywordTok{facet_grid}\NormalTok{(continent }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{scales =} \StringTok{"free_y"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Trends Over Time, by Continent"}\NormalTok{, }
-       \DataTypeTok{x =} \StringTok{"Year"}\NormalTok{, }
-       \DataTypeTok{y =} \StringTok{"Suicides per 100k"}\NormalTok{, }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Zeitlicher Verlauf nach Kontinent"}\NormalTok{, }
+       \DataTypeTok{x =} \StringTok{"Jahr"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Suizide pro 100k Bevölkerung"}\NormalTok{, }
        \DataTypeTok{color =} \StringTok{"Continent"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{, }\DataTypeTok{title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{10}\NormalTok{)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{1985}\NormalTok{, }\DecValTok{2015}\NormalTok{, }\DecValTok{5}\NormalTok{), }\DataTypeTok{minor_breaks =}\NormalTok{ F)}
 
-\NormalTok{continent_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{suicides_files/figure-latex/unnamed-chunk-3-1.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{continent_time_plot}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{suicides_files/figure-latex/unnamed-chunk-4-1.pdf}
+\emph{Abbildung 3}
+
+Direkt fällt wie auch in Abbildung 2 auf, dass Europa eine der höchsten
+Suizidraten im Vergleich zu den anderen Kontinenten hat. Sie steigt
+stetig ab und hat seit 1995 um ca. 40\% abgenommen. 2015 war die
+Suizidrate ählich der von Asien oder Ozeanien. Weiterhin ist auffallend,
+dass die Trends von Ozeanien und Amerika steigend sind.
+
+Folglich haben wir uns die Frage gestellt, wie die globale Suizidrate
+betrachtet auf das Geschlecht aussehen könnte.
 
 \hypertarget{selbstmorde-nach-geschlecht}{%
 \subsubsection{Selbstmorde nach
@@ -491,13 +516,37 @@ Geschlecht}\label{selbstmorde-nach-geschlecht}}
 \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{suicide_per_100k =}\NormalTok{ (}\KeywordTok{sum}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(suicides_no)) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(population))) }\OperatorTok{*}\StringTok{ }\DecValTok{100000}\NormalTok{) }\OperatorTok{%>%}
 \KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ sex, }\DataTypeTok{y =}\NormalTok{ suicide_per_100k, }\DataTypeTok{fill =}\NormalTok{ sex)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Global suicides (per 100k), by Sex"}\NormalTok{,}
-       \DataTypeTok{x =} \StringTok{"Sex"}\NormalTok{, }
-       \DataTypeTok{y =} \StringTok{"Suicides per 100k"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Globale Suizide nach Geschlecht (pro 100k Bevölkerung)"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Geschlecht"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Suizide pro 100k Bevölkerung"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{25}\NormalTok{), }\DataTypeTok{minor_breaks =}\NormalTok{ F)}
 
+\NormalTok{sex_plot}
+\end{Highlighting}
+\end{Shaded}
 
+\includegraphics{suicides_files/figure-latex/unnamed-chunk-5-1.pdf}
+\emph{Abbildung 4}
+
+Abbildung 4 bestätigte unsere Vermutung, dass die Suizidrate bei Männern
+weitaus höher ist, als die von Frauen.
+
+\begin{quote}
+Der größte Risikofaktor für einen Suizid ist eine psychische Erkrankung.
+Vor allem Depression, aber auch schizophrene oder Suchterkrankungen
+erhöhen das Risiko eines Suizides enorm. {[}\ldots{]} Obwohl
+Depressionen bei Frauen ungefähr doppelt so häufig diagnostiziert werden
+wie bei Männern, liegt der Anteil derjenigen Männer die infolge einer
+Depression Suizid begangen haben mit 60 bis 70 Prozent deutlich über dem
+Anteil an Frauen.
+\end{quote}
+
+So begründet \emph{gendermedwiki.uni-muenster.de} die hohe
+Selbstmordrate bei Männern.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{sex_time_plot <-}\StringTok{ }\NormalTok{data }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(year, sex) }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{suicide_per_100k =}\NormalTok{ (}\KeywordTok{sum}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(suicides_no)) }\OperatorTok{/}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(population))) }\OperatorTok{*}\StringTok{ }\DecValTok{100000}\NormalTok{) }\OperatorTok{%>%}
@@ -505,30 +554,30 @@ Geschlecht}\label{selbstmorde-nach-geschlecht}}
 \StringTok{  }\KeywordTok{facet_grid}\NormalTok{(sex }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{scales =} \StringTok{"free_y"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}\StringTok{ }
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Trends Over Time, by Sex"}\NormalTok{, }
-       \DataTypeTok{x =} \StringTok{"Year"}\NormalTok{, }
-       \DataTypeTok{y =} \StringTok{"Suicides per 100k"}\NormalTok{, }
-       \DataTypeTok{color =} \StringTok{"Sex"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Zeitlicher Verlauf nach Geschlecht"}\NormalTok{, }
+       \DataTypeTok{x =} \StringTok{"Jahr"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Suizide pro 100k Bevölkerung"}\NormalTok{, }
+       \DataTypeTok{color =} \StringTok{"Geschlecht"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{1985}\NormalTok{, }\DecValTok{2015}\NormalTok{, }\DecValTok{5}\NormalTok{), }\DataTypeTok{minor_breaks =}\NormalTok{ F)}
 
-\NormalTok{sex_plot}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{suicides_files/figure-latex/unnamed-chunk-5-1.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{sex_time_plot}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{suicides_files/figure-latex/unnamed-chunk-6-1.pdf}
+\emph{Abbildung 5: }
 
-\hypertarget{selbstmorde-nach-country}{%
-\subsubsection{Selbstmorde nach
-Country}\label{selbstmorde-nach-country}}
+Der Suizidverlauf von 1985 bis 2015 sinkt wie auch der globale Kontinent
+Trend (Abb. 3) ab 1995. Bei den Männern bis hin zu 18 Suizide pro
+100.000 Bevölkerung und bei den Frauen auf bis zu 5.2 Suizide pro
+100.000 Bevölkerung. Schauen wir uns nun die folgende Abbildung 6 an,
+stellen wir fest, dass die Länder mit den meisten Suiziden pro 100.000
+Bevölkerung Litauen und Russland sind. Dies könnte natürlich auch der
+große Ausschlag 1995 verursacht haben.
+
+\hypertarget{selbstmorde-nach-land}{%
+\subsubsection{Selbstmorde nach Land}\label{selbstmorde-nach-land}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -546,18 +595,64 @@ Country}\label{selbstmorde-nach-country}}
 \KeywordTok{ggplot}\NormalTok{(country, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ country, }\DataTypeTok{y =}\NormalTok{ suicide_per_100k, }\DataTypeTok{fill =}\NormalTok{ continent)) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_hline}\NormalTok{(}\DataTypeTok{yintercept =}\NormalTok{ global_average, }\DataTypeTok{linetype =} \DecValTok{2}\NormalTok{, }\DataTypeTok{color =} \StringTok{"grey35"}\NormalTok{, }\DataTypeTok{size =} \FloatTok{0.6}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Global suicides per 100k, by Country"}\NormalTok{,}
-       \DataTypeTok{x =} \StringTok{"Country"}\NormalTok{, }
-       \DataTypeTok{y =} \StringTok{"Suicides per 100k"}\NormalTok{, }
-       \DataTypeTok{fill =} \StringTok{"Continent"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Globale Suizide pro 100k Bevölkerung sortiert nach Land"}\NormalTok{,}
+       \DataTypeTok{x =} \StringTok{"Land"}\NormalTok{, }
+       \DataTypeTok{y =} \StringTok{"Suizide pro 100k Bevölkerung"}\NormalTok{, }
+       \DataTypeTok{fill =} \StringTok{"Kontinent"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}\StringTok{ }\CommentTok{#Achsen drehen, weil sont Land nicht zu lesen ist}
 \StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{scale_x_discrete}\NormalTok{(}\StringTok{"Country"}\NormalTok{, }\DataTypeTok{labels =}\NormalTok{  , }\DataTypeTok{position =} \StringTok{"bottom"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_discrete}\NormalTok{(}\StringTok{"Land"}\NormalTok{, }\DataTypeTok{labels =}\NormalTok{  , }\DataTypeTok{position =} \StringTok{"bottom"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position =} \StringTok{"bottom"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{suicides_files/figure-latex/unnamed-chunk-7-1.pdf}
+\emph{Abbildung 6: Globale Suizide pro 100k Bevölkerung sortiert nach
+Land}
+
+\hypertarget{unterschiede-der-geschlechter-geordnet-nach-kontinent}{%
+\subsubsection{Unterschiede der Geschlechter, geordnet nach
+Kontinent}\label{unterschiede-der-geschlechter-geordnet-nach-kontinent}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(continent, sex) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{n =} \KeywordTok{n}\NormalTok{(), }
+            \DataTypeTok{suicides =} \KeywordTok{sum}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(suicides_no)), }
+            \DataTypeTok{population =} \KeywordTok{sum}\NormalTok{(}\KeywordTok{as.numeric}\NormalTok{(population)), }
+            \DataTypeTok{suicide_per_100k =}\NormalTok{ (suicides }\OperatorTok{/}\StringTok{ }\NormalTok{population) }\OperatorTok{*}\StringTok{ }\DecValTok{100000}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ continent, }\DataTypeTok{y =}\NormalTok{ suicide_per_100k, }\DataTypeTok{fill =}\NormalTok{ sex)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{, }\DataTypeTok{position =} \StringTok{"dodge"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_hline}\NormalTok{(}\DataTypeTok{yintercept =}\NormalTok{ global_average, }\DataTypeTok{linetype =} \DecValTok{2}\NormalTok{, }\DataTypeTok{color =} \StringTok{"grey35"}\NormalTok{, }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Unterschied Geschlechter, geordnet nach Kontinent"}\NormalTok{,}
+   \DataTypeTok{x =} \StringTok{"Kontinent"}\NormalTok{, }
+   \DataTypeTok{y =} \StringTok{"Suizide pro 100k Bevölkerung"}\NormalTok{, }
+   \DataTypeTok{fill =} \StringTok{"Geschlecht"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{coord_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{suicides_files/figure-latex/unnamed-chunk-8-1.pdf}
+\emph{Abbildung 7 }
+
+\hypertarget{fazit}{%
+\subsubsection{Fazit}\label{fazit}}
+
+Der allgemeine Trend der Suizide von 1985 bis 2015 sinkt. 1995 gab es
+eine hohe Selbstmordrate, bei der wir derzeit noch nicht wissen, wie
+diese zustande kam. Allgemein betrachtet kann man aus den Daten lesen,
+dass die Selbstmordrate bei Männern höher ist als bei Frauen. Dieses
+Phänomen könnte eventuell daher kommen, dass sich Frauen tendenziell
+öfter anderen Menschen anvertrauen (z.B. Psychologen) als Männer. Aus
+den Daten konnten wir weiterhin herausfinden, dass in Deutschland die
+Suizidrate im Zeitraum von 1985 bis 2015 noch im ``Mittelfeld'' liegt
+(Abb. 6) und an erster Stelle steht Litauen.
+
+Tendenziell liegt die Selbstmordrate pro 100.000 Bevölkerung in Europa
+höher als beispielsweise in Afrika (Abb. 2). Aufgefallen ist hier, dass
+seit 1995/1996 Afrika eine Suizidrate von ca. 0 Suiziden pro 100k
+Bevölkerung hat, was sehr ungewöhnlich ist.
 
 
 \end{document}

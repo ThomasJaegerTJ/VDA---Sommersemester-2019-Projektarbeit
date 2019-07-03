@@ -2,35 +2,40 @@
 title: "VDA - Sommesemster 2019 - Visualisierungen der Suicide Daten von 1985-2016"
 author: "Philipp Dalheimer, Thomas Jäger"
 output:
-  html_notebook: default
   pdf_document: default
   html_document:
-    df_print: paged
+    df_print: paged  
+    toc: true
+    theme: united
+  html_notebook: default
 ---
 
 ### Ausgangssituation
 
 In diesem Projekt beschäftigen wir uns mit der Visualisierung des Datensatz "Suicide Rates Overview von 1985-2016".
 Der Datensatz besteht ursprünglich aus vier anderen Datensätzen, die zusammengefügt wurden, um mögliche Zusammenhänge zu erkennen.  
-  Zu finden ist er unter https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
+Zu finden ist er unter https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
 
 
 **Quellen**
 
-United Nations Development Programm. (2018). Human development index (HDI). Retrieved from  
+United Nations Development Programm. (2018). Human development index (HDI):  
   http://hdr.undp.org/en/indicators/137506
 
 
-World Bank. (2018). World development indicators: GDP (current US$) by country:1985 to 2016. Retrieved from 
-  http://databank.worldbank.org/data/source/world-development-indicators#
+World Bank. (2018). World development indicators: GDP (current US$) by country:1985 to 2016: 
+http://databank.worldbank.org/data/source/world-development-indicators#
 
   
-  [Szamil]. (2017). Suicide in the Twenty-First Century [dataset]. Retrieved from  
-        https://www.kaggle.com/szamil/suicide-in-the-twenty-first-century/notebook
+[Szamil]. (2017). Suicide in the Twenty-First Century [dataset]:  
+https://www.kaggle.com/szamil/suicide-in-the-twenty-first-century/notebook
     
    
-  World Health Organization. (2018). Suicide prevention. Retrieved from  
-          http://www.who.int/mental_health/suicide-prevention/en/
+World Health Organization. (2018). Suicide prevention: 
+http://www.who.int/mental_health/suicide-prevention/en/
+          
+Geschlechterunterschiede bei Suizid und Suizidalität/Fachartikel (2017, uni-muenster.de) 
+https://gendermedwiki.uni-muenster.de/mediawiki/index.php/Geschlechterunterschiede_bei_Suizid_und_Suizidalit%C3%A4t/Fachartikel
 
 
 ### Unsere Ziele
@@ -178,18 +183,17 @@ data %>%
   geom_line(col = "deepskyblue3", size = 1) + 
   geom_point(col = "deepskyblue3", size = 2) + 
   geom_hline(yintercept = global_average, linetype = 2, color = "grey35", size = 1) +     # global average als gestrichelte Linie
-  labs(title = "Global Suicides (per 100k)",
-       subtitle = "Trend over time, 1985 - 2015.",
-       x = "Year", 
-       y = "Suicides per 100k Population") + 
+  labs(title = "Globale Suizide (pro 100k Bevölkerung)",
+       subtitle = "Zeitlicher Verlauf von 1985 bis 2015",
+       x = "Jahr", 
+       y = "Suizide pro 100k Bevölkerung") + 
   scale_x_continuous(breaks = seq(1985, 2015, 2)) + 
   scale_y_continuous(breaks = seq(10, 20))
 ```
-*Abbildung 1: Suicides per 100k per Year. Gestrichelte Linie ist der globale Durchschnitt.*
+*Abbildung 1: Gestrichelte Linie ist der globale Durchschnitt.*
 
 **Was uns auffällt:**  
- - Höchstwert der Suizidrate mit 15.3 Toten per 100k war in 1995  
- - Die Rate sinkt stetig, zu 11.5 Toten per 100k in 2015 ( ca. 25% Abstieg)
+Der Höchstwert der Suizidrate pro 100k Bevölkerung lag im Jahre 1995 bei 15.3 Suiziden. Ab 1995 sinkt die Rate stetig. Ab und an gibt es mal ein Jahr, bei dem die Rate wieder um 0.5 steigt. Diese sinkt jedoch im darauf folgenden Jahr wieder bis sie schließlich in 2015 auf 11.5 Suizide pro 100k Bevölkerung absteigt (ca. 25% Abstieg).
 
 
 ### Selbstmorde nach Kontinent
@@ -204,13 +208,20 @@ continent$continent <- factor(continent$continent, ordered = T, levels = contine
 
 continent_plot <- ggplot(continent, aes(x = continent, y = suicide_per_100k, fill = continent)) + 
   geom_bar(stat = "identity") + 
-  labs(title = "Global Suicides (per 100k), by Continent",
-  x = "Continent", 
-  y = "Suicides per 100k", 
+  labs(title = "Globale Suizide nach Kontinent",
+  x = "Kontinent", 
+  y = "Suizide pro 100k Bevölkerung", 
   fill = "Continent") +
   theme(legend.position = "none", title = element_text(size = 10)) + 
   scale_y_continuous(breaks = seq(0, 20, 1), minor_breaks = F)
 
+continent_plot
+```
+*Abbildung 2*
+
+Wir erkennen anhand der oberen Abbildung 2, dass die meisten Suizide im Zeitraum von 1985 bis 2015 in Europa stattfanden.
+Wie sieht nun der zeitliche Verlauf der einzelnen Bereiche aus?
+```{r}
 continent_time <- data %>%
   group_by(year, continent) %>%
   summarize(suicide_per_100k = (sum(as.numeric(suicides_no)) / sum(as.numeric(population))) * 100000)
@@ -221,24 +232,22 @@ continent_time_plot <- ggplot(continent_time, aes(x = year, y = suicide_per_100k
   facet_grid(continent ~ ., scales = "free_y") + 
   geom_line() + 
   geom_point() + 
-  labs(title = "Trends Over Time, by Continent", 
-       x = "Year", 
-       y = "Suicides per 100k", 
+  labs(title = "Zeitlicher Verlauf nach Kontinent", 
+       x = "Jahr", 
+       y = "Suizide pro 100k Bevölkerung", 
        color = "Continent") + 
   theme(legend.position = "none", title = element_text(size = 10)) + 
   scale_x_continuous(breaks = seq(1985, 2015, 5), minor_breaks = F)
 
-continent_plot
-```
-```{r}
 continent_time_plot
 ```
-**Was uns auffällt:**
-  - Europa hat die höchste Selbstmordrate von allen, sie steigt stetig ab und hat seid 1995 um ca. 40% abgenommen.
-  - 2015 war die Rate von Euro ähnlich der von Asien und Ozeanien
-  - Die Trends von Ozeanien und Amerika sind besorgniserregned
+*Abbildung 3*
 
+Direkt fällt wie auch in Abbildung 2 auf, dass Europa eine der höchsten Suizidraten im Vergleich zu den anderen Kontinenten hat.
+Sie steigt stetig ab und hat seit 1995 um ca. 40% abgenommen.
+2015 war die Suizidrate ählich der von Asien oder Ozeanien. Weiterhin ist auffallend, dass die Trends von Ozeanien und Amerika steigend sind.
 
+Folglich haben wir uns die Frage gestellt, wie die globale Suizidrate betrachtet auf das Geschlecht aussehen könnte.
 
 ### Selbstmorde nach Geschlecht
 
@@ -249,13 +258,27 @@ sex_plot <- data %>%
   summarize(suicide_per_100k = (sum(as.numeric(suicides_no)) / sum(as.numeric(population))) * 100000) %>%
 ggplot(aes(x = sex, y = suicide_per_100k, fill = sex)) +
   geom_bar(stat = "identity") + 
-  labs(title = "Global suicides (per 100k), by Sex",
-       x = "Sex", 
-       y = "Suicides per 100k") +
+  labs(title = "Globale Suizide nach Geschlecht (pro 100k Bevölkerung)",
+       x = "Geschlecht", 
+       y = "Suizide pro 100k Bevölkerung") +
   theme(legend.position = "none") + 
   scale_y_continuous(breaks = seq(0, 25), minor_breaks = F)
 
+sex_plot
+```
+*Abbildung 4*
 
+
+Abbildung 4 bestätigte unsere Vermutung, dass die Suizidrate bei Männern weitaus höher ist, als die von Frauen.
+
+
+
+> Der größte Risikofaktor für einen Suizid ist eine psychische Erkrankung. Vor allem Depression, aber auch schizophrene oder Suchterkrankungen erhöhen das Risiko eines Suizides enorm. [...] Obwohl Depressionen bei Frauen ungefähr doppelt so häufig diagnostiziert werden wie bei Männern, liegt der Anteil derjenigen Männer die infolge einer Depression Suizid begangen haben mit 60 bis 70 Prozent deutlich über dem Anteil an Frauen.
+
+
+So begründet *gendermedwiki.uni-muenster.de* die hohe Selbstmordrate bei Männern.
+
+```{r}
 sex_time_plot <- data %>%
   group_by(year, sex) %>%
   summarize(suicide_per_100k = (sum(as.numeric(suicides_no)) / sum(as.numeric(population))) * 100000) %>%
@@ -263,24 +286,21 @@ sex_time_plot <- data %>%
   facet_grid(sex ~ ., scales = "free_y") + 
   geom_line() + 
   geom_point() + 
-  labs(title = "Trends Over Time, by Sex", 
-       x = "Year", 
-       y = "Suicides per 100k", 
-       color = "Sex") + 
+  labs(title = "Zeitlicher Verlauf nach Geschlecht", 
+       x = "Jahr", 
+       y = "Suizide pro 100k Bevölkerung", 
+       color = "Geschlecht") + 
   theme(legend.position = "none") + 
   scale_x_continuous(breaks = seq(1985, 2015, 5), minor_breaks = F)
 
-sex_plot
-```
-
-
-```{r}
 sex_time_plot
 ```
-**Was uns auffällt**
+*Abbildung 5: *
 
+Der Suizidverlauf von 1985 bis 2015 sinkt wie auch der globale Kontinent Trend (Abb. 3) ab 1995. Bei den Männern bis hin zu 18 Suizide pro 100.000 Bevölkerung und bei den Frauen auf bis zu 5.2 Suizide pro 100.000 Bevölkerung.
+Schauen wir uns nun die folgende Abbildung 6 an, stellen wir fest, dass die Länder mit den meisten Suiziden pro 100.000 Bevölkerung Litauen und Russland sind. Dies könnte natürlich auch der große Ausschlag 1995 verursacht haben.
 
-### Selbstmorde nach Country
+### Selbstmorde nach Land
 
 ```{r fig.width = 10, fig.height = 13}
 # mit "fig.width = 10, fig.height = 13" erreichen wir, dass das Bild richtig angezeigt wird und nicht zu klein ist
@@ -297,17 +317,18 @@ country$country <- factor(country$country,
 ggplot(country, aes(x = country, y = suicide_per_100k, fill = continent)) + 
   geom_bar(stat = "identity") + 
   geom_hline(yintercept = global_average, linetype = 2, color = "grey35", size = 0.6) +
-  labs(title = "Global suicides per 100k, by Country",
-       x = "Country", 
-       y = "Suicides per 100k", 
-       fill = "Continent") +
+  labs(title = "Globale Suizide pro 100k Bevölkerung sortiert nach Land",
+       x = "Land", 
+       y = "Suizide pro 100k Bevölkerung", 
+       fill = "Kontinent") +
   coord_flip() + #Achsen drehen, weil sont Land nicht zu lesen ist
   scale_y_continuous(breaks = seq(0, 45, 2)) +
-  scale_x_discrete("Country", labels =  , position = "bottom") +
+  scale_x_discrete("Land", labels =  , position = "bottom") +
   theme(legend.position = "bottom")
 ```
+*Abbildung 6: Globale Suizide pro 100k Bevölkerung sortiert nach Land*
 
-### Unterschiede der Geschlechter, geordnet nach Country
+### Unterschiede der Geschlechter, geordnet nach Kontinent
 
 
 ```{r}
@@ -320,10 +341,18 @@ data %>%
   ggplot(aes(x = continent, y = suicide_per_100k, fill = sex)) + 
   geom_bar(stat = "identity", position = "dodge") + 
   geom_hline(yintercept = global_average, linetype = 2, color = "grey35", size = 1) +
-  labs(title = "Unterschied Geschlechter, geordnet nach Continent",
-   x = "Continent", 
-   y = "Suicides per 100k", 
-   fill = "Sex") +
+  labs(title = "Unterschied Geschlechter, geordnet nach Kontinent",
+   x = "Kontinent", 
+   y = "Suizide pro 100k Bevölkerung", 
+   fill = "Geschlecht") +
   coord_flip()
 ```
+*Abbildung 7 *
 
+### Fazit
+
+Der allgemeine Trend der Suizide von 1985 bis 2015 sinkt. 1995 gab es eine hohe Selbstmordrate, bei der wir derzeit noch nicht wissen, wie diese zustande kam. 
+Allgemein betrachtet kann man aus den Daten lesen, dass die Selbstmordrate bei Männern höher ist als bei Frauen. Dieses Phänomen könnte eventuell daher kommen, dass sich Frauen tendenziell öfter anderen Menschen anvertrauen (z.B. Psychologen) als Männer.
+Aus den Daten konnten wir weiterhin herausfinden, dass in Deutschland die Suizidrate im Zeitraum von 1985 bis 2015 noch im "Mittelfeld" liegt (Abb. 6) und an erster Stelle steht Litauen. 
+
+Tendenziell liegt die Selbstmordrate pro 100.000 Bevölkerung in Europa höher als beispielsweise in Afrika (Abb. 2). Aufgefallen ist hier, dass seit 1995/1996 Afrika eine Suizidrate von ca. 0 Suiziden pro 100k Bevölkerung hat, was sehr ungewöhnlich ist. 
