@@ -2,11 +2,11 @@
 title: "VDA - Sommesemster 2019 - Visualisierungen der Suicide Daten von 1985-2016"
 author: "Philipp Dalheimer, Thomas Jäger"
 output:
-  pdf_document: default
   html_document:
     df_print: paged  
     toc: true
     theme: united
+  pdf_document: default
   html_notebook: default
 ---
 
@@ -158,10 +158,10 @@ data$generation <- factor(data$generation,
                               "Generation Z"))
 
 
-data <- as_tibble(data)  # TO-DO as_tibble erklären
+data <- as_tibble(data)  # as_tibble beeser/gleich als as_data_frame()
 
 
-# global average
+# globaler durchschnitt
 global_average <- (sum(as.numeric(data$suicides_no)) / sum(as.numeric(data$population))) * 100000
 
 
